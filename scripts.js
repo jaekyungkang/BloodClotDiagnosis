@@ -16,23 +16,45 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
         alert(errorMessage);
     });
 });
-document.getElementById('predictionForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.getElementById("predictionForm")
+.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    // 1 user input
-    var input1 = document.getElementById('input1').value;
-    // can add more variables for additional input fields
+  var fileInput = document.getElementById("input");
+  if (fileInput.files.length === 0) {
+    alert("Please upload an image file.");
+    return;
+  }
 
-    // sending data to ML model ?
-    var predictionResult = predict(input1);
+  // getting the uploaded image file
+  var file = fileInput.files[0];
 
-    // display the result from model
-    document.getElementById('predictionResult').innerHTML = '<p>Prediction Result: ' + predictionResult + '</p>';
+  // creating a formdata object and appending the file to it
+  var formData = new FormData();
+  formData.append("file", file);
+
+  // fetching the data from google gemini url
+  fetch(
+    "https://4f54-2607-f010-2a7-301f-4542-3ab5-c94f-7eb.ngrok-free.app/",
+    {
+      method: "POST",
+      body: formData,
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        alert('File uploaded successfully!');
+      var predictionResultContainer =
+        document.getElementById("predictionResult");
+      predictionResultContainer.innerHTML = "";
+
+      // displaying the prediction result container
+      document.getElementById("predictionResult").style.display =
+        "block";
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("An error occured while fetching data.");
+    });
 });
-
-// predict function for model
-function predict(input1) {
-    // add call to ML model with the user inputted data and get the prediction result
-    // replace with model's logic
-    return prediction;
-}
