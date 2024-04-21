@@ -35,7 +35,7 @@ document.getElementById("predictionForm")
 
   // fetching the data from google gemini url
   fetch(
-    "https://4f54-2607-f010-2a7-301f-4542-3ab5-c94f-7eb.ngrok-free.app/",
+    "https://de06-2607-f010-2a7-301f-4542-3ab5-c94f-7eb.ngrok-free.app/",
     {
       method: "POST",
       body: formData,
